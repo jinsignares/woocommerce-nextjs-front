@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": ["prettier", "decorators"],
+  "rules": {
+    "no-console": "warn",
+    "quotes": ["warn", "single"]
+  }
 }
