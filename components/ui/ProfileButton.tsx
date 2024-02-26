@@ -7,8 +7,20 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { UserCircle2Icon } from 'lucide-react';
 
 const ProfileButton = () => {
+  const session = useSession();
+
+  if (!session.data) {
+    return (
+      <Link href={'/sign-in'}>
+        <UserCircle2Icon className="h-6 w-6" />
+      </Link>
+    );
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

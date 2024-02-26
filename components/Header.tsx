@@ -28,7 +28,7 @@ const Header = (props: Props) => {
   ];
 
   return (
-    <header className="border-b px-4 py-3 sm:flex sm:justify-between">
+    <header className="border-b sm:flex sm:justify-between">
       <Container>
         <div className="relative flex h-16 w-full items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
