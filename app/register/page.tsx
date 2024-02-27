@@ -20,9 +20,7 @@ import { signIn } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { customerAccountSchema } from '@/validation/schemas';
 
-type Props = {
-  searchParams: { isRegister?: boolean };
-};
+type Props = {};
 
 interface FormValues {
   firstName: string;
@@ -33,9 +31,7 @@ interface FormValues {
   // cartData: string
 }
 
-const Register = ({ searchParams }: Props) => {
-  const isRegister = !!!searchParams.isRegister;
-
+const Register = ({}: Props) => {
   const {
     register,
     handleSubmit,
@@ -51,37 +47,23 @@ const Register = ({ searchParams }: Props) => {
       setSubmiting(true);
       //   const cartData = JSON.stringify(cart);
       data = { ...data };
-      if (isRegister) {
-        const req = await fetch('/api/customers/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
+      const req = await fetch('/api/customers/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
 
-        const { message } = await req.json();
+      const { message } = await req.json();
 
-        if (req.status === 200) {
-          await signIn('credentials', {
-            redirect: false,
-            ...data,
-          });
-
-          router.push('account');
-        } else {
-          setResponse(message);
-        }
-      } else {
-        const user: any = await signIn('credentials', {
+      if (req.status === 200) {
+        await signIn('credentials', {
           redirect: false,
           ...data,
         });
 
-        if (user.ok === true) {
-          router.push('account');
-        } else {
-          setResponse('Wrong username or password');
-        }
-        setSubmiting(false);
+        router.push('account');
+      } else {
+        setResponse(message);
       }
     } catch (error) {
       setSubmiting(false);
@@ -126,12 +108,12 @@ const Register = ({ searchParams }: Props) => {
             </CardContent>
             <CardFooter className={cn('flex flex-col space-y-2')}>
               <Button className="w-full" type="submit">
-                Sign In
+                Register{' '}
               </Button>
               <span>
-                Don't have an account?{' '}
-                <Link href="/register">
-                  <Button variant={'link'}>Register</Button>
+                Already have an account?{' '}
+                <Link href="/sign-in">
+                  <Button variant={'link'}>Sign In</Button>
                 </Link>
               </span>
             </CardFooter>
