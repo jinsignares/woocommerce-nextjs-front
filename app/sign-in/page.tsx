@@ -23,7 +23,7 @@ import { signIn } from 'next-auth/react';
 type CardProps = React.ComponentProps<typeof Card>;
 
 interface FormValues {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -38,7 +38,6 @@ const SignIn = ({ ...props }: CardProps) => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
     try {
       const user: any = await signIn('credentials', {
         redirect: false,
@@ -68,7 +67,11 @@ const SignIn = ({ ...props }: CardProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <Input type="email" placeholder="Email" {...register('email')} />
+              <Input
+                type="text"
+                placeholder="Email"
+                {...register('username')}
+              />
               <Input
                 type="password"
                 placeholder="Password"
