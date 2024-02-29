@@ -28,6 +28,8 @@ interface FormValues {
   email: string;
   password: string;
   confirmPassword: string;
+  username?: string;
+  name?: string;
   // cartData: string
 }
 
@@ -42,11 +44,14 @@ const Register = ({}: Props) => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log(data);
     try {
       setSubmiting(true);
       //   const cartData = JSON.stringify(cart);
-      data = { ...data };
+      data = {
+        ...data,
+        username: data.email,
+        name: `${data.firstName} ${data.lastName}`,
+      };
       const req = await fetch('/api/customers/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
